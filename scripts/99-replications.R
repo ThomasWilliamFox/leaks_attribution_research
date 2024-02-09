@@ -93,8 +93,6 @@ cables_cited <- cables_cited |>
   add_row("NUM CABLES" = 13, n = 0, .after = 14) |>
   add_row("NUM CABLES" = 14, n = 0, .after = 15) |>
   add_row("NUM CABLES" = 15, n = 0, .after = 16)
-  
-cables_cited
 
 # Make column for combined cables cited 
 cables_cited <-
@@ -132,20 +130,32 @@ table_data <-
   table_data |>
   select(`C`,`J`,`Year`) 
 
-table_data_c3 <- 
-  filter(table_data,`C` == 3)
-
-table_data_c2 <-
+table_data_c2 <- 
   filter(table_data,`C` == 2)
   
-
-table_data_c3_counts <- 
-  table_data_c3 |> count(`J`, .drop = FALSE)
+table_data_c3 <- 
+  filter(table_data,`C` == 3)
 
 table_data_c2_counts <- 
   table_data_c2 |> count(`J`, .drop = FALSE)
 
+table_data_c3_counts <- 
+  table_data_c3 |> count(`J`, .drop = FALSE)
 
-table_data_c2_counts
+
+# add rows to table_data_c2 where count is 0. 
+table_data_c2_counts <- table_data_c2_counts|> 
+  add_row("J" = "FA", n = 0, .after = 4) |>
+  add_row("J" = "FP", n = 0, .after = 5) |>
+  add_row("J" = "IO", n = 0, .after = 8) |>
+  add_row("J" = "IR", n = 0, .after = 9)
+
+
+table_data_c2_counts 
 table_data_c3_counts
 
+
+
+merged_c2_c3 <- cbind(table_data_c3_counts, table_data_c2_counts["n"])
+
+merged_c2_c3
