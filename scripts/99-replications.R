@@ -51,16 +51,49 @@ cables_cited$`NUM CABLES`[cables_cited$`NUM CABLES` == "??"] <- "-1"
 # Covert all entries to numbers
 cables_cited$`NUM CABLES` <- as.numeric(cables_cited$`NUM CABLES`)
 
-# Ommit all N/A articles
+# Omit all N/A articles
 cables_cited <- 
   cables_cited |> na.omit(cables_cited)
 
-# Make tibble with 0 - max number of cables cited (16)
-graph1_data <- 
-  tibble( 
-    number_cited = c(0:max(cables_cited)),
-    )
+# Make counts for each cable number 
+cables_cited<- 
+  cables_cited |> count(`NUM CABLES`, .drop = FALSE)
 
-graph1_data
+cables_cited <- cables_cited |> 
+  add_row("NUM CABLES" = 9, n = 0, .after = 10) |>
+  add_row("NUM CABLES" = 13, n = 0, .after = 14) |>
+  add_row("NUM CABLES" = 14, n = 0, .after = 15) |>
+  add_row("NUM CABLES" = 15, n = 0, .after = 16)
+  
+cables_cited
+
+# Make column for combined cables cited 
+cables_cited <-
+  cables_cited |>
+  mutate(combined_cables = `NUM CABLES` * n)
+
+# Covert all entries to numbers and change -1 back to ?? or "Unclear"
+cables_cited$`NUM CABLES` <- as.character(cables_cited$`NUM CABLES`)
+cables_cited$`NUM CABLES`[cables_cited$`NUM CABLES` == "-1"] <- "Unclear"
+cables_cited$`combined_cables`[cables_cited$`combined_cables` == -2] <- 2
+
+# Reorder 
+cables_cited <- cables_cited |>
+  slice(2:18, 1)
+
+
+# Construct Graph 
+cables_cited |> 
+  ggplot(aes(x= reorder(`NUM CABLES`, 1:18), y = n)) +
+  geom_bar(stat = "identity", width = .4) +
+  theme_minimal() +
+  labs(x = "Cables Cited", y = "Articles") +
+  ggtitle("Articles Apparently Referencing Leaked 
+          US Diplomatic Cables Directly (n=64), in 
+          Peer-reviewed, TRIP 2011-Ranked Journals, 
+          2010-2020, by Cables Cited") +
+  theme(plot.title = element_text(size=10))
+
+
 
 
