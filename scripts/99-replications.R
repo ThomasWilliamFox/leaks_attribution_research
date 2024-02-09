@@ -55,11 +55,15 @@ leak_references |>
   ggplot(aes(x= `Year`, fill = (`PEER` == 1))) +
   geom_bar(width = .4) +
   theme_minimal() +
-  labs(x = "Cables Cited", y = "Articles") +
+  labs(x = "Year", y = "Articles") +
+  theme(legend.title = element_blank()) +
+  theme(legend.position = "bottom") +
   ggtitle("Articles Apparently Referencing Leaked 
   Material Directly, 2010-2020, in TRIP 2011-ranked 
   Journals (n=116)") +
-  theme(plot.title = element_text(size=10))
+  theme(plot.title = element_text(size=10)) +
+  scale_fill_discrete(labels = c("FA+FP, Code 3", "Peer Reviewed, Code 3"))+
+  guides(fill = guide_legend(reverse = TRUE))
 
 
 # Graph 2 
