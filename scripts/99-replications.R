@@ -38,7 +38,31 @@ journal_names <-
   rename(name = ...16 , shortform = ...17)
 
 
-# Graph 1 
+# Graph 1
+
+# Isolate year, code, journal, and peer-reviewed status (0 for Foreign Policy 
+# and Foreign Affairs, 1 for all others.) 
+leak_references <-
+  publication_data |>
+  select(`Year`, `C`, `J`, `PEER`) 
+
+# Filter out all non code 3 rows (using leaked sources directly)
+leak_references <- 
+  filter(leak_references, `C` == "3")
+
+# Construct Graph 
+leak_references |> 
+  ggplot(aes(x= `Year`, fill = (`PEER` == 1))) +
+  geom_bar(width = .4) +
+  theme_minimal() +
+  labs(x = "Cables Cited", y = "Articles") +
+  ggtitle("Articles Apparently Referencing Leaked 
+  Material Directly, 2010-2020, in TRIP 2011-ranked 
+  Journals (n=116)") +
+  theme(plot.title = element_text(size=10))
+
+
+# Graph 2 
 
 # Select only number of cables cited
 cables_cited <-
@@ -93,6 +117,8 @@ cables_cited |>
           Peer-reviewed, TRIP 2011-Ranked Journals, 
           2010-2020, by Cables Cited") +
   theme(plot.title = element_text(size=10))
+
+
 
 
 
