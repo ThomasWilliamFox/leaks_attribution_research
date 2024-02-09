@@ -29,13 +29,14 @@ names(publication_data) <-
   unlist()
 publication_data <- publication_data |> slice(-1)
 
-
 # Make journal name key
 journal_names <- raw_publication_data[c(24:43), c(16,17)]
-
 journal_names <- 
   journal_names |>
   rename(name = ...16 , shortform = ...17)
+
+
+#### Build Figures ####
 
 
 # Graph 1
@@ -105,10 +106,9 @@ cables_cited$`NUM CABLES` <- as.character(cables_cited$`NUM CABLES`)
 cables_cited$`NUM CABLES`[cables_cited$`NUM CABLES` == "-1"] <- "Unclear"
 cables_cited$`combined_cables`[cables_cited$`combined_cables` == -2] <- 2
 
-# Reorder 
+# Reposition "unclear" to the bottom of the table
 cables_cited <- cables_cited |>
   slice(2:18, 1)
-
 
 # Construct Graph 
 cables_cited |> 
@@ -124,6 +124,28 @@ cables_cited |>
 
 
 
+#### Build Table ####
+
+table_data <- publication_data
+
+table_data <- 
+  table_data |>
+  select(`C`,`J`,`Year`) 
+
+table_data_c3 <- 
+  filter(table_data,`C` == 3)
+
+table_data_c2 <-
+  filter(table_data,`C` == 2)
+  
+
+table_data_c3_counts <- 
+  table_data_c3 |> count(`J`, .drop = FALSE)
+
+table_data_c2_counts <- 
+  table_data_c2 |> count(`J`, .drop = FALSE)
 
 
+table_data_c2_counts
+table_data_c3_counts
 
