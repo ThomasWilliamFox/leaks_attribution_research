@@ -1,24 +1,42 @@
-#### Preamble ####
-# Purpose: Replicated graphs and table from The Provenance Problem: 
-# Research Methods and Ethics in the Age of WikiLeaks. by CHRISTOPHER DARNTON
-# Author: Thomas Fox
-# Date: 110 February 2024
-# Contact: thomas.fox@mail.utoronto.ca
-# License: MIT
-# Pre-requisites: Follow instructions in scripts/01-download_data.R to download 
-# and properly save required data
+---
+title: "Replicated Figures and Table: "
+subtitle: "Christopher Darnton's The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks."
+author: 
+  - Thomas Fox
+date: today
+date-format: long
+format: pdf
+editor: visual
+---
 
+**Paper:** Darnton, Christopher. (2022). The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks. American Political Science Review, 116(3), 1110–1125. doi:10.1017/S0003055421001374
 
+**Replication Data:** Darnton, Christopher. (2021). “Replication Data for: The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks.” Harvard Dataverse. Dataset. https://doi.org/10.7910/DVN/SPLDTF.
+
+\newpage
+```{r}
+#| include: false
+#| echo: false
+#| message: false
 #### Workspace setup ####
 library(tidyverse)
 library(knitr)
 library(dplyr)
 
+```
 
+```{r}
+#| include: false
+#| echo: false
+#| message: false
 #### Load data ####
-raw_publication_data <- read_csv("data/raw_data/raw_data.csv", show_col_types = FALSE)
+raw_publication_data <- read_csv(here::here("data/raw_data/raw_data.csv"))
+```
 
-
+```{r}
+#| include: false
+#| echo: false
+#| message: false
 #### Clean data ####
 
 # Isolate publication data
@@ -43,8 +61,13 @@ rating <- raw_publication_data[c(24:43), c(20)]
 rating <- rating |>
   rename(trip = "...20")
 
-#### Build Figures ####
+```
 
+```{r}
+#| echo: false
+#| message: false
+#| fig-cap: Articles Using Leaked Material
+#### Build Figures ####
 
 # Graph 1
 
@@ -72,7 +95,12 @@ in TRIP 2011-ranked Journals (n=116)") +
   scale_fill_manual(values= c("white", "black"), labels = c("FA+FP, Code 3", "Peer Reviewed, Code 3"))+
   guides(fill = guide_legend(reverse = TRUE))
 
+```
 
+```{r}
+#| echo: false
+#| message: false
+#| fig-cap: Articles Using Leaked Cables
 # Graph 2 
 
 # Select only number of cables cited
@@ -125,7 +153,13 @@ in Peer-reviewed, TRIP 2011-Ranked Journals, 2010-2020, by Cables Cited") +
   theme(plot.title = element_text(size=10))
 
 
+```
 
+\newpage
+
+```{r}
+#| echo: false
+#| message: false
 #### Build Table ####
 
 table_data <- publication_data
@@ -176,7 +210,6 @@ first_pub <-
   tibble(years =  rep(c(9980:9999))  )
 
 # calculate first year published code 3 for each journal 
-publication_data
 for (x in 1:20){
   for(y in 1:nrow(publication_data)){
     if(isTRUE(publication_data$J[y] == c2_c3_data$J[x]) == TRUE)
@@ -206,3 +239,4 @@ c2_c3_data |> kable(
   caption = "Journals Publishing Work with Leaked Material"
 )
 
+```
