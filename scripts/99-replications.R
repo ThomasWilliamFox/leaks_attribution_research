@@ -10,6 +10,8 @@
 
 #### Workspace setup ####
 library(tidyverse)
+library(knitr)
+library(dplyr)
 
 
 #### Load data ####
@@ -35,7 +37,7 @@ journal_names <-
   journal_names |>
   rename(name = ...16 , shortform = ...17)
 
-#Isolate TRIP ratings
+# Isolate TRIP ratings (from table 1 data in data set)
 rating <- raw_publication_data[c(24:43), c(20)]
 rating <- rating |>
   rename(trip = "...20")
@@ -130,59 +132,83 @@ cables_cited |>
 
 table_data <- publication_data
 
-table_data
+# Isolate code, journal, and year 
 table_data <- 
   table_data |>
   select(`C`,`J`,`Year`) 
 
+# sub table for c2
 table_data_c2 <- 
   filter(table_data,`C` == 2)
-  
+
+# sub table for c3
 table_data_c3 <- 
   filter(table_data,`C` == 3)
-?count()
-# RENAME "n"
+
+# counts for c2 articles 
 table_data_c2_counts <- 
   table_data_c2 |> count(`J`, .drop = FALSE, name = "c2_count")
 
+# counts for c3 articles
 table_data_c3_counts <- 
   table_data_c3 |> count(`J`, .drop = FALSE, name = "c3_count")
 
-table_data_c2_counts
-# add rows to table_data_c2 where count is 0. 
+
+# add rows to table_data_c2 where count is 0. (FIX to omit)
 table_data_c2_counts <- table_data_c2_counts|> 
   add_row("J" = "FA", c2_count = 0, .after = 4) |>
   add_row("J" = "FP", c2_count = 0, .after = 5) |>
   add_row("J" = "IO", c2_count = 0, .after = 8) |>
   add_row("J" = "IR", c2_count = 0, .after = 9)
 
-
-table_data_c2_counts 
-table_data_c3_counts
-
-
-
+# merge counts 
 merged_c2_c3 <- cbind(table_data_c3_counts, table_data_c2_counts["c2_count"])
 
-journal_names
-
-
-journal_names <- journal_names |> arrange(name)
+# sort journal names alphabetically 
+journal_table_names <- journal_names |> arrange(name)
   
-journal_names
+# add long form journal names 
+c2_c3_data <- cbind(merged_c2_c3, journal_table_names["name"])
 
-
-c2_c3_data <- cbind(merged_c2_c3, journal_names["name"])
-
+# move names to first column 
 c2_c3_data <- c2_c3_data |> relocate(name)
 
+# make empty df for first year of code 3 article  
+first_pub <- 
+  tibble(years =  rep(c(9980:9999))  )
 
-c2_c3_data
+# calculate first year published code 3 for each journal 
+publication_data
+for (x in 1:20){
+  for(y in 1:nrow(publication_data)){
+    if(isTRUE(publication_data$J[y] == c2_c3_data$J[x]) == TRUE)
+      if(isTRUE(publication_data$C[y] == 3) == TRUE) 
+        if(isTRUE(publication_data$Year[y] <= first_pub$years[x]) == TRUE)
+          first_pub$years[x] = publication_data$Year[y]
+        }
+}
+
+# add first years to df 
+c2_c3_data <- cbind(c2_c3_data, first_pub["years"])
+
+# order by c3 count 
 c2_c3_data <-c2_c3_data |> arrange(desc(c3_count))
 
+# add trip rating
 c2_c3_data <- cbind(c2_c3_data, rating["trip"])
 
-c2_c3_data
+# move years to last column 
+c2_c3_data <- c2_c3_data |> relocate(years, .after = trip)
+
+# construct table 
+c2_c3_data |> kable(
+  col.names = c("Title", " Short Form", "Code 3 Articles, 2010-2020", 
+                "Code 2 Articles, 2010-2020", "TRIP Rank, 2011", "First Code 3 Article"),
+  booktabs = TRUE,
+  caption = "Journals Publishing Work with Leaked Material"
+)
+
+
 
 
 
