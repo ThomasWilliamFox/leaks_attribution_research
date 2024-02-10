@@ -35,6 +35,10 @@ journal_names <-
   journal_names |>
   rename(name = ...16 , shortform = ...17)
 
+#Isolate TRIP ratings
+rating <- raw_publication_data[c(24:43), c(20)]
+rating <- rating |>
+  rename(trip = "...20")
 
 #### Build Figures ####
 
@@ -126,6 +130,7 @@ cables_cited |>
 
 table_data <- publication_data
 
+table_data
 table_data <- 
   table_data |>
   select(`C`,`J`,`Year`) 
@@ -135,20 +140,21 @@ table_data_c2 <-
   
 table_data_c3 <- 
   filter(table_data,`C` == 3)
-
+?count()
+# RENAME "n"
 table_data_c2_counts <- 
-  table_data_c2 |> count(`J`, .drop = FALSE)
+  table_data_c2 |> count(`J`, .drop = FALSE, name = "c2_count")
 
 table_data_c3_counts <- 
-  table_data_c3 |> count(`J`, .drop = FALSE)
+  table_data_c3 |> count(`J`, .drop = FALSE, name = "c3_count")
 
-
+table_data_c2_counts
 # add rows to table_data_c2 where count is 0. 
 table_data_c2_counts <- table_data_c2_counts|> 
-  add_row("J" = "FA", n = 0, .after = 4) |>
-  add_row("J" = "FP", n = 0, .after = 5) |>
-  add_row("J" = "IO", n = 0, .after = 8) |>
-  add_row("J" = "IR", n = 0, .after = 9)
+  add_row("J" = "FA", c2_count = 0, .after = 4) |>
+  add_row("J" = "FP", c2_count = 0, .after = 5) |>
+  add_row("J" = "IO", c2_count = 0, .after = 8) |>
+  add_row("J" = "IR", c2_count = 0, .after = 9)
 
 
 table_data_c2_counts 
@@ -156,6 +162,30 @@ table_data_c3_counts
 
 
 
-merged_c2_c3 <- cbind(table_data_c3_counts, table_data_c2_counts["n"])
+merged_c2_c3 <- cbind(table_data_c3_counts, table_data_c2_counts["c2_count"])
 
-merged_c2_c3
+journal_names
+
+
+journal_names <- journal_names |> arrange(name)
+  
+journal_names
+
+
+c2_c3_data <- cbind(merged_c2_c3, journal_names["name"])
+
+c2_c3_data <- c2_c3_data |> relocate(name)
+
+
+c2_c3_data
+c2_c3_data <-c2_c3_data |> arrange(desc(c3_count))
+
+c2_c3_data <- cbind(c2_c3_data, rating["trip"])
+
+c2_c3_data
+
+
+
+
+
+
