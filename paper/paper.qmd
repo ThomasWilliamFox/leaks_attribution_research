@@ -1,10 +1,9 @@
 ---
-title: "My title"
+title: "Leaks, Attribution, and Academic Research"
 subtitle: "My subtitle if needed"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Thomas Fox
+thanks: "Code and data are available at: https://github.com/ThomasWilliamFox/leaks_attribution_research.git;Replication on Social Science Reproduction Platform can be found at:  https://www.socialsciencereproduction.org/reproductions/302459e5-ae78-49cf-82d1-265bfe0ad5f1/index"
 date: today
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
@@ -20,6 +19,7 @@ bibliography: references.bib
 
 library(tidyverse)
 library(palmerpenguins)
+library(here)
 ```
 
 Total mentions vs Total citations
@@ -31,6 +31,32 @@ Mentions vs high profile cases (assange, manning)
 Mentions vs president/gov
 
 
+```{r}
+# read publication data
+journal_data = read_csv(
+  file = here("data/analysis_data/publication_analysis_data.csv"),
+  show_col_types = FALSE
+)
+
+# read cleaned child care data
+journal_key = read_csv(
+  file = here("data/analysis_data/journal_key_analysis_data.csv"),
+  show_col_types = FALSE
+)
+
+```
+
+```{r}
+
+journal_data |>
+  ggplot(aes(x = as.character(journal_data$year), fill = journal)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(x = "Year", y = "Articles")
+
+
+
+```
 
 
 
