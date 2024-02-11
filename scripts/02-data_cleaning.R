@@ -32,17 +32,37 @@ cleaned_pub_data <- cleaned_pub_data|> slice(-1)
 # Clean names 
 cleaned_pub_data <- clean_names(cleaned_pub_data)
 
+# Select desired columns 
+cleaned_pub_data <-
+  cleaned_pub_data |>
+  select(c, j, year, class, no_source, to_from_found, peer, leak, body_leak, num_cables, euph, cable)
 
-# Make journal name key
+# Convert all N/A values
+cleaned_pub_data <-
+  cleaned_pub_data |> replace_na(list(class = "n", no_source = "n", 
+                                      to_from_found = "n", leak = "n",
+                                      euph = "n", peer = "n", 
+                                      body_leak ="0", num_cables = "0"))  
+
+
+# change "??" in num_cables to 0 
+cleaned_pub_data$num_cables[cleaned_pub_data$num_cables == "??"] <- "0"
+
+
+# Construct journal name key
 journal_name_key <- raw_pub_data[c(24:43), c(16,17)]
 journal_name_key <- 
   journal_name_key |>
   rename(name = ...16 , shortform = ...17)
-journal_name_key
-
-
 
 
 #### Save data ####
 
-# write_csv(cleaned_data, "data/analysis_data.csv")
+# Write cleaned data 
+write_csv(cleaned_pub_data, "data/analysis_data/publication_analysis_data.csv")
+
+# Write journal key 
+write_csv(journal_name_key, "data/analysis_data/journal_key_analysis_data.csv")
+
+
+
