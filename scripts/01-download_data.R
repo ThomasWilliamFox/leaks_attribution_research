@@ -1,11 +1,13 @@
 #### Preamble ####
-# Purpose: Downloads and saves the data from [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Provides instructions for downloading and saving data from:
+# https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/SPLDTF
+# and saves data to csv file. 
+# Author: Thomas Fox
+# Date: 11 February 2024
+# Contact: thomas.fox@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: n/a
+# Any other information needed? n/a
 
 
 #### Workspace setup ####
@@ -17,7 +19,7 @@ library(tidyverse)
 
 # Raw Data for replication in excel format can be found at this URL:
 # https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/SPLDTF
-#
+
 # After downloading, open with excel and select "no" when prompted to open as "read only"
 # File > Save As > "raw_data.xlsx" 
 # Save the file to > leaks_attribution_research/data/raw_data

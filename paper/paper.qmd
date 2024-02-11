@@ -22,6 +22,17 @@ library(tidyverse)
 library(palmerpenguins)
 ```
 
+Total mentions vs Total citations
+
+Mentions per year 
+
+Mentions vs high profile cases (assange, manning) 
+
+Mentions vs president/gov
+
+
+
+
 
 # Introduction
 
