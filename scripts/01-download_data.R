@@ -20,9 +20,9 @@ library(tidyverse)
 # Raw Data for replication in excel format can be found at this URL:
 # https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/SPLDTF
 
-# After downloading, open with excel and select "no" when prompted to open as "read only"
+# After downloading, open and select "no" when prompted to open as "read only"
 # File > Save As > "raw_data.xlsx" 
-# Save the file to > leaks_attribution_research/data/raw_data
+# Save the file to > data/raw_data
 
 raw_data <- read_xlsx("data/raw_data/raw_data.xlsx")
 

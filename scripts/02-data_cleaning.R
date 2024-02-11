@@ -4,7 +4,7 @@
 # Date: 11 February 2024
 # Contact: thomas.fox@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: Follow directions for downloading and saving raw_data.csv in scripts/00-download_data.R
+# Pre-requisites: Follow directions in scripts/01-download_data.R
 # Any other information needed? N/A
 
 #### Workspace setup ####
@@ -45,8 +45,22 @@ cleaned_pub_data <-
                                       body_leak ="0", num_cables = "0"))  
 
 
-# change "??" in num_cables to 0 
+
+# Change "??" in num_cables to 0 
 cleaned_pub_data$num_cables[cleaned_pub_data$num_cables == "??"] <- "0"
+
+# Change body_leak column to "y" and "n", this is cited as the proper value in 
+# data set preamble but is coded as 0 and 1 in the data set. 
+cleaned_pub_data$body_leak[cleaned_pub_data$body_leak == "0"] <- "n"
+cleaned_pub_data$body_leak[cleaned_pub_data$body_leak == "1"] <- "y"
+
+# Make column names more descriptive 
+cleaned_pub_data <- 
+  cleaned_pub_data |>
+  rename(
+  code = c,
+  journal = j,
+  classified = class)
 
 
 # Construct journal name key
