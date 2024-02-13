@@ -64,8 +64,8 @@ if (class(test_publication$body_leak) != "character") {
 }
 
 
-# Test journal name key
-
+# Test journal/name/trip key
+  
 if (nrow(test_names) != 20) {
   print("Number of journals is incorrect")
 }
@@ -76,7 +76,13 @@ if (class(test_names$shortform) != "character") {
 
 if (class(test_names$name) != "character") {
   print("Journal names column is not of class character")
+} 
+
+if (max(test_names$trip_rating > 20)) {
+  print("TRIP rating greater than 20, out of bounds")
 }
 
-
+if (min(test_names$trip_rating < 1)) {
+  print("TRIP rating less than 1, out of bounds")
+}
 

@@ -1,21 +1,21 @@
-name,shortform
-Foreign Policy,FP
-International Affairs,IA
-International Security,IS
-Foreign Affairs,FA
-Security Studies,SS
-Review of International Studies,RIS
-International Studies Quarterly,ISQ
-Global Governance,GG
-International Studies Review,ISR
-European Journal of International Relations,EJIR
-International Organization,IO
-Review of International Political Economy,RIPE
-American Political Science Review,APSR
-Comparative Politics,CP
-International Relations,IR
-Journal of Peace Research,JPR
-World Politics,WP
-American Journal of Political Science,AJPS
-Journal of Conflict Resolution,JCR
-Millennium: Journal of International Studies,MIL
+name,shortform,trip_rating
+Foreign Policy,FP,9
+International Affairs,IA,13
+International Security,IS,3
+Foreign Affairs,FA,4
+Security Studies,SS,14
+Review of International Studies,RIS,10
+International Studies Quarterly,ISQ,2
+Global Governance,GG,20
+International Studies Review,ISR,17
+European Journal of International Relations,EJIR,7
+International Organization,IO,1
+Review of International Political Economy,RIPE,15
+American Political Science Review,APSR,5
+Comparative Politics,CP,19
+International Relations,IR,18
+Journal of Peace Research,JPR,16
+World Politics,WP,6
+American Journal of Political Science,AJPS,12
+Journal of Conflict Resolution,JCR,8
+Millennium: Journal of International Studies,MIL,11

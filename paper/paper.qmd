@@ -9,6 +9,7 @@ date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib
 ---
 
@@ -16,8 +17,10 @@ bibliography: references.bib
 #| include: false
 #| warning: false
 #| message: false
+#| echo: false
 
 library(tidyverse)
+library(knitr)
 library(palmerpenguins)
 library(here)
 ```
@@ -32,6 +35,11 @@ Mentions vs president/gov
 
 
 ```{r}
+#| include: false
+#| warning: false
+#| message: false
+#| echo: false
+
 # read publication data
 journal_data = read_csv(
   file = here("data/analysis_data/publication_analysis_data.csv"),
@@ -43,21 +51,7 @@ journal_key = read_csv(
   file = here("data/analysis_data/journal_key_analysis_data.csv"),
   show_col_types = FALSE
 )
-
 ```
-
-```{r}
-
-journal_data |>
-  ggplot(aes(x = as.character(journal_data$year), fill = journal)) +
-  geom_bar() +
-  theme_minimal() +
-  labs(x = "Year", y = "Articles")
-
-
-
-```
-
 
 
 # Introduction
@@ -72,19 +66,95 @@ The remainder of this paper is structured as follows. @sec-data....
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
+
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: tbl-publicationnames
+#| tbl-cap: Names, Shortform, and TRIP-20 ratings of the 20 journals
+#| warning: false
+#| message: false
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+journals <- 
+  arrange(journal_key, trip_rating)
+
+journals |>
+  kable(col.names = c("Journal Name", "Short Form", "TRIP-20 Rating"),
+    booktabs = TRUE
+  ) 
 ```
+
+
+
+```{r}
+#| label: tbl-publicationdata
+#| tbl-cap: Sample of Cleaned Academic Publication Data
+#| warning: false
+#| message: false
+#| echo: false
+
+head(journal_data[c(1:8)], 6) |>
+  kable(col.names = c("Code",
+                      "Journal", "Year", "Classified",
+                      "No Source", "No U.S.G.",
+                      "Mentions 'leak'", "Uses euphamism"),
+    booktabs = TRUE
+  ) 
+```
+
+```{r}
+#| label: tbl-publicationdata2
+#| warning: false
+#| message: false
+#| echo: false
+
+head(journal_data[c(9:14)], 6) |>
+  kable(col.names = c("'Wikileaks cable'", "To - From - Found"
+                      , "Peer Reviewed", "Body Text Leak", 
+                      "Cables", "Number of Cables"),
+        
+    booktabs = TRUE,
+  ) 
+```
+
+
+```{r}
+#| label: fig-totalarticles
+#| fig-cap: Articles in TRIP-20 rated journals apparently citing documents from WikiLeaks by year
+#| warning: false
+#| message: false
+#| echo: false
+
+filter(journal_data, code == 3) |>
+  ggplot(aes(x = as.character(`year`), fill = journal)) +
+  geom_bar() +
+  theme_minimal() +
+  scale_fill_viridis_d()+
+  labs(x = "Year", y = "Articles") +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: fig-peerarticles
+#| fig-cap: Articles in TRIP-20 rated journals apparently citing documents from WikiLeaks by year
+#| warning: false
+#| message: false
+#| echo: false
+
+journal_peer <-
+  filter(journal_data, code == 3, peer == 'y') 
+
+journal_peer
+journal_peer |>
+  ggplot(aes(x = as.character(`year`), fill = journal)) +
+  geom_bar() +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  labs(x = "Year", y = "Articles") +
+  theme(legend.position = "bottom")
+
+```
+
+
 
 Talk more about it.
 
@@ -94,10 +164,6 @@ And also planes (@fig-planes). (You can change the height and width, but don't w
 # Results
 
 Our results are summarized in @tbl-modelresults.
-
-
-
-
 
 # Discussion
 
@@ -118,10 +184,6 @@ Weaknesses and next steps should also be included.
 \appendix
 
 # Appendix {-}
-
-## Diagnostics
-
-
 
 
 \newpage

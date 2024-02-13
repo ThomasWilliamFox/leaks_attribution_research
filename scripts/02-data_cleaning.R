@@ -32,17 +32,23 @@ cleaned_pub_data <- cleaned_pub_data|> slice(-1)
 # Clean names 
 cleaned_pub_data <- clean_names(cleaned_pub_data)
 
+cleaned_pub_data
+
 # Select desired columns 
 cleaned_pub_data <-
   cleaned_pub_data |>
-  select(c, j, year, class, no_source, to_from_found, peer, leak, body_leak, num_cables, euph, cable)
+  select(c, j, year, class, no_source, no_usg, leak, euph, wlc, to_from_found, peer, body_leak, cable, num_cables)
+
+cleaned_pub_data
 
 # Convert all N/A values
 cleaned_pub_data <-
   cleaned_pub_data |> replace_na(list(class = "n", no_source = "n", 
                                       to_from_found = "n", leak = "n",
                                       euph = "n", peer = "n", 
-                                      body_leak ="0", num_cables = "0"))  
+                                      body_leak ="0", num_cables = "0", 
+                                      no_usg = "n", wlc = "n", cable = "n" ))  
+
 
 
 
@@ -54,6 +60,16 @@ cleaned_pub_data$num_cables[cleaned_pub_data$num_cables == "??"] <- "0"
 cleaned_pub_data$body_leak[cleaned_pub_data$body_leak == "0"] <- "n"
 cleaned_pub_data$body_leak[cleaned_pub_data$body_leak == "1"] <- "y"
 
+# Change cable column 0s and 1s to "y" and "n",
+cleaned_pub_data$cable[cleaned_pub_data$cable == "0"] <- "n"
+cleaned_pub_data$cable[cleaned_pub_data$cable == "1"] <- "y"
+
+# Change cable column 0s and 1s to "y" and "n",
+cleaned_pub_data$peer[cleaned_pub_data$peer == "0"] <- "n"
+cleaned_pub_data$peer[cleaned_pub_data$peer == "1"] <- "y"
+
+cleaned_pub_data
+
 # Make column names more descriptive 
 cleaned_pub_data <- 
   cleaned_pub_data |>
@@ -63,11 +79,15 @@ cleaned_pub_data <-
   classified = class)
 
 
-# Construct journal name key
+# Construct journal name/trip rating key
 journal_name_key <- raw_pub_data[c(24:43), c(16,17)]
+trip_ratings <- raw_pub_data[c(24:43), c(20)]
+
+journal_name_key <- cbind(journal_name_key, trip_ratings["...20"])
+
 journal_name_key <- 
   journal_name_key |>
-  rename(name = ...16 , shortform = ...17)
+  rename(name = ...16 , shortform = ...17, trip_rating = ...20)
 
 
 #### Save data ####
