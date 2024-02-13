@@ -11,7 +11,6 @@
 
 
 #### Workspace setup ####
-library(opendatatoronto)
 library(tidyverse)
 
 

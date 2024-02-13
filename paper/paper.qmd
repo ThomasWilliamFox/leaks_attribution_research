@@ -6,11 +6,13 @@ author:
 thanks: "Code and data are available at: https://github.com/ThomasWilliamFox/leaks_attribution_research.git;Replication on Social Science Reproduction Platform can be found at:  https://www.socialsciencereproduction.org/reproductions/302459e5-ae78-49cf-82d1-265bfe0ad5f1/index"
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "Serious ethical and professional issues face the researcher community while considering the millions of classified documents released by WikiLeaks as potential research tools. This paper examines publication trends in top-rated international relations journals that cite or make reference to classified documents released by Wikileaks. This paper finds both a lack of professional consistency and an increase in the use of these documents in publications by peer-reviewed journals between 2010 and 2020. This finding suggests the need for clear professional consensus within the research community surrounding these ethically questionable materials."
 format: pdf
 number-sections: true
 toc: true
 bibliography: references.bib
+nocite: |
+  @tellingstories
 ---
 
 ```{r}
@@ -56,7 +58,7 @@ Third Paragraph. (What is found)
 
 Fourth Paragraph. (Paper layout)
 
-You can and should Cross-reference sections and sub-sections. We use @citeR and @rohan.
+You can and should Cross-reference sections and sub-sections. We use @citeR as well as packages such as @tidyverse, @knitr, @here, @dplyr, @janitor. We replicate @darnton using @darntondata and @trip. 
 
 The remainder of this paper is structured as follows. @sec-data....
 
