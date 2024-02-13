@@ -1,6 +1,6 @@
 ---
 title: "Leaks, Attribution, and Academic Research"
-subtitle: "My subtitle if needed"
+subtitle: "The Role of Precedence and Normalization in Publication Trends"
 author: 
   - Thomas Fox
 thanks: "Code and data are available at: https://github.com/ThomasWilliamFox/leaks_attribution_research.git;Replication on Social Science Reproduction Platform can be found at:  https://www.socialsciencereproduction.org/reproductions/302459e5-ae78-49cf-82d1-265bfe0ad5f1/index"
@@ -21,24 +21,16 @@ bibliography: references.bib
 
 library(tidyverse)
 library(knitr)
-library(palmerpenguins)
 library(here)
 ```
-
-Total mentions vs Total citations
-
-Mentions per year 
-
-Mentions vs high profile cases (assange, manning) 
-
-Mentions vs president/gov
-
 
 ```{r}
 #| include: false
 #| warning: false
 #| message: false
 #| echo: false
+
+#### Load data ####
 
 # read publication data
 journal_data = read_csv(
@@ -56,16 +48,24 @@ journal_key = read_csv(
 
 # Introduction
 
+First Paragraph. (Why it matters)
+
+Second Paragraph. (What it does)
+
+Third Paragraph. (What is found)
+
+Fourth Paragraph. (Paper layout)
+
 You can and should Cross-reference sections and sub-sections. We use @citeR and @rohan.
 
 The remainder of this paper is structured as follows. @sec-data....
 
 
-
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+## TRIP-20 Political Science and Foreign Policy Publications {#sec-journals}
 
+Some of our data is about journals (@tbl-publicationnames).
 
 ```{r}
 #| label: tbl-publicationnames
@@ -77,13 +77,15 @@ Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 journals <- 
   arrange(journal_key, trip_rating)
 
-journals |>
+journals|>
   kable(col.names = c("Journal Name", "Short Form", "TRIP-20 Rating"),
     booktabs = TRUE
   ) 
 ```
 
+## Articles Citing WikiLeaks Documents (2010-2020)  {#sec-publications}
 
+Some of our data is about publication data (@tbl-publicationdata).
 
 ```{r}
 #| label: tbl-publicationdata
@@ -94,9 +96,9 @@ journals |>
 
 head(journal_data[c(1:8)], 6) |>
   kable(col.names = c("Code",
-                      "Journal", "Year", "Classified",
+                      "Journal", "Year", "Mentions 'Classified'",
                       "No Source", "No U.S.G.",
-                      "Mentions 'leak'", "Uses euphamism"),
+                      "Mentions 'Leak'", "Uses euphamism"),
     booktabs = TRUE
   ) 
 ```
@@ -108,14 +110,15 @@ head(journal_data[c(1:8)], 6) |>
 #| echo: false
 
 head(journal_data[c(9:14)], 6) |>
-  kable(col.names = c("'Wikileaks cable'", "To - From - Found"
-                      , "Peer Reviewed", "Body Text Leak", 
-                      "Cables", "Number of Cables"),
+  kable(col.names = c("'Wikileaks' cable'", "To-From-Found"
+                      , "Peer Reviewed", "Leak in Body", 
+                      "Cable Discussed", "Cable(s) Cited"),
         
     booktabs = TRUE,
   ) 
 ```
 
+Some of our data is about articles (@fig-totalarticles).
 
 ```{r}
 #| label: fig-totalarticles
@@ -133,6 +136,9 @@ filter(journal_data, code == 3) |>
   theme(legend.position = "bottom")
 ```
 
+Some of our data is about articles (@fig-peerarticles).
+
+
 ```{r}
 #| label: fig-peerarticles
 #| fig-cap: Articles in TRIP-20 rated journals apparently citing documents from WikiLeaks by year
@@ -143,7 +149,6 @@ filter(journal_data, code == 3) |>
 journal_peer <-
   filter(journal_data, code == 3, peer == 'y') 
 
-journal_peer
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
   geom_bar() +
@@ -154,16 +159,37 @@ journal_peer |>
 
 ```
 
+Some of our data is about articles (@fig-fafpalarticles).
 
+
+```{r}
+#| label: fig-fafparticles
+#| fig-cap: Articles in FA and FP apparently citing documents from WikiLeaks by year
+#| warning: false
+#| message: false
+#| echo: false
+
+journal_peer <-
+  filter(journal_data, code == '3', peer == 'n') 
+
+journal_peer |>
+  ggplot(aes(x = as.character(`year`), fill = journal)) +
+  geom_bar() +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  labs(x = "Year", y = "Articles") +
+  theme(legend.position = "bottom")
+
+```
 
 Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+And also planes. (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
 
 # Results
 
-Our results are summarized in @tbl-modelresults.
+Our results are summarized in...
 
 # Discussion
 
