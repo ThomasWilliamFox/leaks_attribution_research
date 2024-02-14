@@ -1,12 +1,12 @@
 ---
 title: "Leaks, Attribution, and Academic Research"
-subtitle: "The Role of Precedence and Normalization in Publication Trends"
+subtitle: "Post-Truth, Provenance, and the Role of Professional Reflexivity"
 author: 
   - Thomas Fox
 thanks: "Code and data are available at: https://github.com/ThomasWilliamFox/leaks_attribution_research.git;Replication on Social Science Reproduction Platform can be found at:  https://www.socialsciencereproduction.org/reproductions/302459e5-ae78-49cf-82d1-265bfe0ad5f1/index"
 date: today
 date-format: long
-abstract: "Ethical and professional issues face the research community while considering the millions of classified documents released by WikiLeaks as potential research materials. This paper examines trends in top-rated international relations journals that cite or make reference to these materials in publications between 2010 and 2020. Findings indicate an increase in articles published by peer-reviewed journals which use these materials, as well as a lack of professional consistency while doing so. This suggests the need for clear professional consensus within the research community surrounding these ethically questionable materials."
+abstract: "Researchers face serious ethical and professional issues when considering millions of classified documents released by WikiLeaks as potential research materials. This paper examines trends in top-rated international relations journals that apparently cite or make reference to these materials in publications between 2010 and 2020. Findings indicate an increase in articles published by peer-reviewed journals that cite these materials, and a lack of professional consistency while doing so. This suggests the need for clear professional consensus within the research community surrounding these ethically questionable materials."
 format: pdf
 number-sections: true
 toc: true
@@ -35,12 +35,14 @@ library(here)
 #### Load data ####
 
 # read publication data
+
 journal_data = read_csv(
   file = here("data/analysis_data/publication_analysis_data.csv"),
   show_col_types = FALSE
 )
 
 # read cleaned child care data
+
 journal_key = read_csv(
   file = here("data/analysis_data/journal_key_analysis_data.csv"),
   show_col_types = FALSE
@@ -50,11 +52,11 @@ journal_key = read_csv(
 
 # Introduction
 
-First Paragraph. (Why it matters)
+Researchers in various fields are guided by frameworks established by professional bodies and institutions while conducting research and publishing their work. Paleontologists and art historians for instance put considerable emphasis on the provenance of fossils and artworks while considering whether or not to engage with these sources [@darnton]. These practices aim to ensure that ethical practices are involved in the procurement of these objects and to verify that these sources of information are trustworthy and authentic [@darnton]. As millions of classified government documents are leaked by platforms like WikiLeaks, researchers in political science and international relations are given little professional guidance surrounding the temptation to use these sources of information in their research [@darnton].  
 
 This paper follows a reproduction of Darnton's 2022 paper, "The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks" by examining its replication data made available through the Harvard Dataverse [@darntondata]. The analysis of the data was carried out with the programming language R [@citeR]. Various packages were used in the processing, cleaning, and presentation of this information, including tidyverse [@tidyverse], knitr [@knitr], here [@here], dplyr [@dplyr], and janitor [@janitor].
 
-Third Paragraph. (What is found)
+This analysis shows that influential, editorial, non-peer reviewed international relations journals set a precedent of publishing articles using leaked classified materials in the years following the "Iraqi War Logs" leak in 2010 [@darnton]. As the numbers of articles published by these journals declined, peer-reviewed academic journals published articles apparently referencing leaked classified documents with increasing frequency. These articles are inconsistently cited, provide little justification for using such materials, and rarely discuss the implications of these practices. A framework similar to that discussed by @darnton is supported by these findings as a potential means of encouraging professional reflexivity and consistency in academic and professional research.
 
 This remainder of this paper contains an outline of the data examined, an analysis of the data, and a discussion of the findings. [@sec-data] outlines the analysis data made available by Darnton [@darntondata]. [@sec-journals] examines the TRIP-20 journals and their ratings @trip. [@sec-publications] outlines the data-set built by Darnton, consisting of information about articles that use classified materials [@darntondata]. An exploration and analysis of the data is found in [@sec-results]. The paper concludes with a discussion surrounding the paper's findings, including potential weaknesses and further research [@sec-discussion].
 
@@ -71,8 +73,12 @@ The 2011 Teaching, Research, and International Policy (TRIP) faculty survey was 
 #| message: false
 #| echo: false
 
+# Arrange key by TRIP rating
+
 journals <- 
   arrange(journal_key, trip_rating)
+
+# Build table 
 
 journals|>
   kable(col.names = c("Journal Name", "Short Form", "TRIP-20 Rating"),
@@ -82,11 +88,11 @@ journals|>
 
 ## Articles Apparently Referencing Materials From WikiLeaks (2010 - 2020)  {#sec-publications}
 
-A data set containing information related to articles apparently referencing classified materials released by WikiLeaks was built by Darnton as part of their paper [@darnton]. The terms, "Wikileaks”, “cable”, and a combination of the two were used to search for articles published between 2010 and 2020 in TRIP rated journals. Darnton used data bases such as JSTOR, Project Muse, and ProQuest, as well as publisher platforms including Sage, Wiley, and Oxford University Press to locate the articles contained in the data set [@darnton]. Of the 565 articles produced through their search, 397 were false positives (mentioned WikiLeaks organization or physical cables). Darnton read and itemized each of the 168 remaining articles to build their analysis data set [@darnton].
+A data set containing information related to articles apparently referencing classified materials released by WikiLeaks was constructed by Darnton as part of their paper [@darnton]. The terms, "Wikileaks”, “cable”, and a combination of the two were used to search for articles published between 2010 and 2020 in TRIP rated journals. Darnton used data bases such as JSTOR, Project Muse, and ProQuest, as well as publisher platforms including Sage, Wiley, and Oxford University Press to locate the articles contained in the data set [@darnton]. Of the 565 articles produced through their search, 397 were false positives (mentioned WikiLeaks organization or physical cables). Darnton read and itemized each of the 168 remaining articles to build their analysis data set [@darnton].
 
 @tbl-publicationdata is built using Darnton's replication data [@darntondata]. The data set contains 168 entries, each corresponding to an article in a TRIP rated journal that apparently references classified documents released by WikiLeaks. The "code" variable refers to Darnton's coding system, with "2" representing articles that refer to classified material via secondary sources, and "3" representing articles that quote, cite, or paraphrase classified material from WikiLeaks directly [@darnton]. The "Journal" and "Year" variables refer to the journal that published the article and the year in which it was published. 
 
-Various Boolean variables (coded as "y" for yes and "n" for no) are usedin Darnton's data set. The "Classified" variable indicates whether the article makes reference to the classified nature of the materials [@darnton]. "No Source" indicates that at least one referenced document is missing a citation. "Leak" indicates that the article mentions leaked nature of sources. "Uses Euphemism" refers to articles that use verbs other than leak such as "publish, or disseminate." The "To-From-Found" variable describes whether citations include an "author (can be "embassy"), recipient (even "State"), and repository". "Peer reviewed" indicates whether the journal is peer reviewed."Cable Discussed" indicates whether an article discusses leaked US cables and the "Cables Cited" variable communicates how many individual leaked cables are cited. 
+Various variables coded as "y" for yes and "n" for no are used in Darnton's data set. The "Classified" variable indicates whether the article makes reference to the classified nature of the materials [@darnton]. "No Source" indicates that at least one referenced document is missing a citation. "Leak" indicates that the article mentions leaked nature of sources. "Uses Euphemism" refers to articles that use verbs other than leak such as "publish, or disseminate." "WikiLeaks' cable" indicates if an article refers to a document or cable as the possession of WikiLeaks rather than its true source. The "To-From-Found" variable describes whether citations include an "author (can be "embassy"), recipient (even "State"), and repository". "Peer reviewed" indicates whether the journal is peer reviewed."Cable Discussed" indicates whether an article discusses leaked US cables and the "Cables Cited" variable communicates how many individual leaked cables are cited. 
 
 ```{r}
 #| label: tbl-publicationdata
@@ -95,6 +101,8 @@ Various Boolean variables (coded as "y" for yes and "n" for no) are usedin Darnt
 #| message: false
 #| echo: false
 
+# Build first half of publication data table
+
 head(journal_data[c(1:6)], 6) |>
   kable(col.names = c("Code",
                       "Journal", "Year", "Mentions 'Classified'",
@@ -102,8 +110,6 @@ head(journal_data[c(1:6)], 6) |>
         align = 'l',
     booktabs = TRUE
   ) 
-
-?kable()
 ```
 
 ```{r}
@@ -112,28 +118,33 @@ head(journal_data[c(1:6)], 6) |>
 #| message: false
 #| echo: false
 
-head(journal_data[c(7:11)], 6) |>
-  kable(col.names = c("Uses euphamism", "To-From-Found", "Peer Reviewed", 
+# Builds second half of publication data table
+
+head(journal_data[c(7:12)], 6) |>
+  kable(col.names = c("Uses euphamism", "WikiLeaks' cable", "To-From-Found", "Peer Reviewed", 
                       "Cable Discussed", "Cable(s) Cited"),
         align = 'l',
     booktabs = TRUE,
   ) 
 ```
 
-@fig-totalarticles displays all 168 articles published in TRIP rated journals from 2010-2020 that apparently cite or reference leaked documents from WikiLeaks either directly or through secondary sources. The years with the greatest number of articles published are 2011 with 24, 2013 with 21, and 2016 with 20.
+@fig-totalarticles displays all 168 articles published in TRIP rated journals from 2010-2020 that apparently cite or reference leaked documents from WikiLeaks directly or through secondary sources. The years with the greatest number of articles published are 2011 with 24, 2013 with 21, and 2016 with 20. 
 
 ```{r}
 #| label: fig-totalarticles
-#| fig-cap: Articles in TRIP-20 rated journals apparently citing documents from WikiLeaks by year
+#| fig-cap: Articles in TRIP rated journals apparently citing leaked classified material
 #| warning: false
 #| message: false
 #| echo: false
+
+# Builds graph with each published article citing leaked classified documents
+# Each bar is filled with the proportion of articles published by each journal per year 
 
 filter(journal_data) |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
   geom_bar() +
   theme_minimal() +
-  scale_fill_viridis_d()+
+  scale_fill_grey()+
   labs(x = "Year", y = "Articles") +
   theme(legend.position = "bottom")
 ```
@@ -141,67 +152,111 @@ filter(journal_data) |>
 
 # Results {#sec-results}
 
-@fig-peerarticles displays
-
+@fig-peerarticles displays articles that directly cite leaked classified materials in peer-reviewed journals. This graph indicates an upward trend in publication by all 18 TRIP peer-reviewed journals.   
 
 ```{r}
 #| label: fig-peerarticles
-#| fig-cap: Articles in TRIP-20 rated journals apparently citing documents from WikiLeaks by year
+#| fig-cap:  Articles in peer-reviewed TRIP rated journals apparently citing leaked classified material
 #| warning: false
 #| message: false
 #| echo: false
 journal_peer <-
   filter(journal_data, code == 3, peer == 'y') 
 
+#table(journal_peer$leak)
 
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
   geom_bar() +
   theme_minimal() +
-  scale_fill_viridis_d() +
+  scale_fill_grey() +
   labs(x = "Year", y = "Articles") +
   theme(legend.position = "bottom")
 
 ```
 
-Some of our data is about articles (@fig-fafpalarticles).
-
+@fig-fafparticles shows the articles directly citing classified materials published by Foreign Affairs magazine and Foreign Policy magazine, both non-academic, editorial journals [@darnton]. The decreasing number of articles from 2011 to 2020 suggest that these journals published articles utilizing these sources when they were contextually relevant and moved on in subsequent years. In doing so, these types of journals may have set a precedent that was followed by TRIP rated peer-reviewed academic journals.  
 
 ```{r}
 #| label: fig-fafparticles
-#| fig-cap: Articles in FA and FP apparently citing documents from WikiLeaks by year
+#| fig-cap: Articles in Foreign Affairs and Foreign Policy apparently citing leaked classified material
 #| warning: false
 #| message: false
 #| echo: false
 
 journal_peer <-
-  filter(journal_data, code == '3', peer == 'n') 
+  filter(journal_data, code == 3, peer == 'n') 
 
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
   geom_bar() +
   theme_minimal() +
-  scale_fill_viridis_d() +
+  scale_fill_grey() +
   labs(x = "Year", y = "Articles") +
   theme(legend.position = "bottom")
 
 ```
 
-Talk more about it.
+@fig-peerpoorprac shows the number of peer reviewed articles that either do not mention the classified nature of the materials cited, contain at least one missing citation to a leaked document, use a euphemism like "disseminate" rather than leak, or mention "WikiLeaks'" cable/document rather than citing its true source. Any one of these attributes suggests that the article is obscuring the true source of the utilized information. 
 
-And also planes. (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+```{r}
+#| label: fig-peerpoorprac
+#| fig-cap: Articles in peer-reviewed TRIP rated journals down-playig the source of materials
+#| warning: false
+#| message: false
+#| echo: false
+journal_peer <-
+  filter(journal_data, code == 3, peer == 'y', classified == 'n' | no_source == 'y' | euph =='y' | wlc =='y') 
+
+journal_peer |>
+  ggplot(aes(x = as.character(`year`), fill = journal)) +
+  geom_bar() +
+  theme_minimal() +
+  scale_fill_grey() +
+  labs(x = "Year", y = "Articles") +
+  theme(legend.position = "bottom")
+
+```
+
+@fig-peergoodprac demonstrates peer-reviewed journal articles articles that either mention all sources, discuss the classified nature of the material, discuss the fact that the materials were leaked, or contain a "to-from-found" citation (see @sec-publications). Any one of these facets point to transparent research practices, although it is worth mentioning that none of the articles included in this analysis displayed all of these attributes. 
+
+
+```{r}
+#| label: fig-peergoodprac
+#| fig-cap: Articles in peer-reviewed TRIP rated journals properly citing source of materials 
+#| warning: false
+#| message: false
+#| echo: false
+journal_peer <-
+  filter(journal_data, code == 3, peer == 'y', classified == 'y' | no_source == 'n' | leak =='y' | to_from_found == 'y') 
+
+journal_peer |>
+  ggplot(aes(x = as.character(`year`), fill = journal)) +
+  geom_bar() +
+  theme_minimal() +
+  scale_fill_grey() +
+  labs(x = "Year", y = "Articles") +
+  theme(legend.position = "bottom")
+
+```
+
+These findings point to a decrease in reluctance to public articles that apparently utilize these materials by peer-reviewed academic international relations journals. Although Foreign Affairs and Foreign Policy Magazine are not academic journals, they are both in the top ten (4 and 9 respectively) most influential journals in the field of international relations as outlined in the 2011 TRIP survey [@trip]. The lack of consistency in disclosure regarding the nature of these documents in many of these articles obscures their source as well as the ethical implications surrounding their use. Many articles use good practices while referencing these materials, but as Darnton points out, very few discuss the reasons for relying on these materials.  
 
 # Discussion {#sec-discussion}
 
-## First discussion point {#sec-first-point}
+## Upward Trend in Publications {#sec-first-point}
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
 
-## Second discussion point
 
-## Third discussion point
+## Questionable Practices
 
-## Weaknesses and next steps
+
+
+## A Case for Reflexive Frameworks
+
+
+
+## Weaknesses and Next Steps
 
 Weaknesses and next steps should also be included.
 

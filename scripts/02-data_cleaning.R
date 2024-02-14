@@ -36,7 +36,7 @@ cleaned_pub_data <- clean_names(cleaned_pub_data)
 # Select desired columns 
 cleaned_pub_data <-
   cleaned_pub_data |>
-  select(c, j, year, class, no_source, leak, euph, to_from_found, peer, cable, num_cables)
+  select(c, j, year, class, no_source, leak, euph, wlc, to_from_found, peer, cable, num_cables)
 
 
 # Convert all N/A values
@@ -44,7 +44,8 @@ cleaned_pub_data <-
   cleaned_pub_data |> replace_na(list(class = "n", no_source = "n", 
                                       to_from_found = "n", leak = "n",
                                       euph = "n", peer = "n", 
-                                      num_cables = "0" , cable = "n" ))  
+                                      num_cables = "0" , cable = "n", 
+                                      wlc = "n"))  
 
 
 
