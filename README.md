@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo includes all files needed to reproduce my paper "Leaks, Attribution, and Academic Research". This paper follows a reproduction Christopher Darnton's 2022 paper, "The Provenance Problem: Re-search Methods and Ethics in the Age of WikiLeaks." The paper explores research methods and publication and trends in articles apparently referencing leaked classified documents in top international relations journals from 2010 - 2020.
+This repo includes all files needed to reproduce my paper "Leaks, Attribution, and Academic Research". This paper follows a reproduction Christopher Darnton's 2022 paper, "The Provenance Problem: Re-search Methods and Ethics in the Age of WikiLeaks." The paper explores research methods and publication trends in articles apparently referencing leaked classified documents in top international relations journals from 2010 - 2020.
 
 To use this folder, click the green "Code" button", then "Download ZIP". Move the downloaded folder to where you want to work on your own computer, and then modify it to suit.
 
@@ -12,7 +12,7 @@ The repo is structured as:
 
 -   `data/raw_data` contains the raw data as obtained from Darnton's replication file.
 -   `data/analysis_data` contains the cleaned dataset that was constructed.
--   `other` contains relevant literature, details about LLM chat interactions, and sketches.
+-   `other` contains relevant literature, LLM statement, and sketches.
 -   `paper` contains the files used to generate the paper, and replication, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
 -   `scripts` contains the R scripts used to replicate, simulate, download, test, and clean data.
 
