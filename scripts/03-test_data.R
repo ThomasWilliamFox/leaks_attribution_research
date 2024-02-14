@@ -59,7 +59,7 @@ if (class(test_publication$classified) != "character") {
   print("Classified column is not of class character")
 }
 
-if (class(test_publication$body_leak) != "character") {
+if (class(test_publication$peer) != "character") {
   print("Body_leak column is not of class character")
 }
 

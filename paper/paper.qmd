@@ -6,7 +6,7 @@ author:
 thanks: "Code and data are available at: https://github.com/ThomasWilliamFox/leaks_attribution_research.git;Replication on Social Science Reproduction Platform can be found at:  https://www.socialsciencereproduction.org/reproductions/302459e5-ae78-49cf-82d1-265bfe0ad5f1/index"
 date: today
 date-format: long
-abstract: "Serious ethical and professional issues face the researcher community while considering the millions of classified documents released by WikiLeaks as potential research tools. This paper examines publication trends in top-rated international relations journals that cite or make reference to classified documents released by Wikileaks. This paper finds both a lack of professional consistency and an increase in the use of these documents in publications by peer-reviewed journals between 2010 and 2020. This finding suggests the need for clear professional consensus within the research community surrounding these ethically questionable materials."
+abstract: "Ethical and professional issues face the research community while considering the millions of classified documents released by WikiLeaks as potential research materials. This paper examines trends in top-rated international relations journals that cite or make reference to these materials in publications between 2010 and 2020. Findings indicate an increase in articles published by peer-reviewed journals which use these materials, as well as a lack of professional consistency while doing so. This suggests the need for clear professional consensus within the research community surrounding these ethically questionable materials."
 format: pdf
 number-sections: true
 toc: true
@@ -52,22 +52,17 @@ journal_key = read_csv(
 
 First Paragraph. (Why it matters)
 
-Second Paragraph. (What it does)
+This paper follows a reproduction of Darnton's 2022 paper, "The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks" by examining its replication data made available through the Harvard Dataverse [@darntondata]. The analysis of the data was carried out with the programming language R [@citeR]. Various packages were used in the processing, cleaning, and presentation of this information, including tidyverse [@tidyverse], knitr [@knitr], here [@here], dplyr [@dplyr], and janitor [@janitor].
 
 Third Paragraph. (What is found)
 
-Fourth Paragraph. (Paper layout)
-
-You can and should Cross-reference sections and sub-sections. We use @citeR as well as packages such as @tidyverse, @knitr, @here, @dplyr, @janitor. We replicate @darnton using @darntondata and @trip. 
-
-The remainder of this paper is structured as follows. @sec-data....
-
+This remainder of this paper contains an outline of the data examined, an analysis of the data, and a discussion of the findings. [@sec-data] outlines the analysis data made available by Darnton [@darntondata]. [@sec-journals] examines the TRIP-20 journals and their ratings @trip. [@sec-publications] outlines the data-set built by Darnton, consisting of information about articles that use classified materials [@darntondata]. An exploration and analysis of the data is found in [@sec-results]. The paper concludes with a discussion surrounding the paper's findings, including potential weaknesses and further research [@sec-discussion].
 
 # Data {#sec-data}
 
-## TRIP-20 Political Science and Foreign Policy Publications {#sec-journals}
+## TRIP Survey International Relations Journals (2011) {#sec-journals}
 
-Some of our data is about journals (@tbl-publicationnames).
+The 2011 Teaching, Research, and International Policy (TRIP) faculty survey was published in 2012 as part of the TRIP Project at The Institute for the Theory and Practice of International Relations at the College of William & Mary in Williamsburg, Virginia [@trip]. The survey, collected responses from 3464 political science, international relations, and foreign policy professionals across 20 countries [@trip]. The table on page 52 of the publication is a world-wide aggregate of responses on two questions surrounding which journals have the "greatest influence on the way IR scholars think about international relations" [@trip]. The top 20 journals from the TRIP survey were used the basis for Darnton's analysis data set of articles apparently referencing classified documents [@darnton]. @tbl-publicationnames, is built using data found within Darnton's replication data set [@darntondata]. The data consists of the names of the 20 journals, their short form abbreviations used by Darnton, as well as their ranking in the TRIP survey, with 1 being most influential and 20 being the least. 
 
 ```{r}
 #| label: tbl-publicationnames
@@ -85,9 +80,13 @@ journals|>
   ) 
 ```
 
-## Articles Citing WikiLeaks Documents (2010-2020)  {#sec-publications}
+## Articles Apparently Referencing Materials From WikiLeaks (2010 - 2020)  {#sec-publications}
 
-Some of our data is about publication data (@tbl-publicationdata).
+A data set containing information related to articles apparently referencing classified materials released by WikiLeaks was built by Darnton as part of their paper [@darnton]. The terms, "Wikileaks”, “cable”, and a combination of the two were used to search for articles published between 2010 and 2020 in TRIP rated journals. Darnton used data bases such as JSTOR, Project Muse, and ProQuest, as well as publisher platforms including Sage, Wiley, and Oxford University Press to locate the articles contained in the data set [@darnton]. Of the 565 articles produced through their search, 397 were false positives (mentioned WikiLeaks organization or physical cables). Darnton read and itemized each of the 168 remaining articles to build their analysis data set [@darnton].
+
+@tbl-publicationdata is built using Darnton's replication data [@darntondata]. The data set contains 168 entries, each corresponding to an article in a TRIP rated journal that apparently references classified documents released by WikiLeaks. The "code" variable refers to Darnton's coding system, with "2" representing articles that refer to classified material via secondary sources, and "3" representing articles that quote, cite, or paraphrase classified material from WikiLeaks directly [@darnton]. The "Journal" and "Year" variables refer to the journal that published the article and the year in which it was published. 
+
+Various Boolean variables (coded as "y" for yes and "n" for no) are usedin Darnton's data set. The "Classified" variable indicates whether the article makes reference to the classified nature of the materials [@darnton]. "No Source" indicates that at least one referenced document is missing a citation. "Leak" indicates that the article mentions leaked nature of sources. "Uses Euphemism" refers to articles that use verbs other than leak such as "publish, or disseminate." The "To-From-Found" variable describes whether citations include an "author (can be "embassy"), recipient (even "State"), and repository". "Peer reviewed" indicates whether the journal is peer reviewed."Cable Discussed" indicates whether an article discusses leaked US cables and the "Cables Cited" variable communicates how many individual leaked cables are cited. 
 
 ```{r}
 #| label: tbl-publicationdata
@@ -96,13 +95,15 @@ Some of our data is about publication data (@tbl-publicationdata).
 #| message: false
 #| echo: false
 
-head(journal_data[c(1:8)], 6) |>
+head(journal_data[c(1:6)], 6) |>
   kable(col.names = c("Code",
                       "Journal", "Year", "Mentions 'Classified'",
-                      "No Source", "No U.S.G.",
-                      "Mentions 'Leak'", "Uses euphamism"),
+                      "No Source", "Mentions 'Leak'"),
+        align = 'l',
     booktabs = TRUE
   ) 
+
+?kable()
 ```
 
 ```{r}
@@ -111,16 +112,15 @@ head(journal_data[c(1:8)], 6) |>
 #| message: false
 #| echo: false
 
-head(journal_data[c(9:14)], 6) |>
-  kable(col.names = c("'Wikileaks' cable'", "To-From-Found"
-                      , "Peer Reviewed", "Leak in Body", 
+head(journal_data[c(7:11)], 6) |>
+  kable(col.names = c("Uses euphamism", "To-From-Found", "Peer Reviewed", 
                       "Cable Discussed", "Cable(s) Cited"),
-        
+        align = 'l',
     booktabs = TRUE,
   ) 
 ```
 
-Some of our data is about articles (@fig-totalarticles).
+@fig-totalarticles displays all 168 articles published in TRIP rated journals from 2010-2020 that apparently cite or reference leaked documents from WikiLeaks either directly or through secondary sources. The years with the greatest number of articles published are 2011 with 24, 2013 with 21, and 2016 with 20.
 
 ```{r}
 #| label: fig-totalarticles
@@ -129,7 +129,7 @@ Some of our data is about articles (@fig-totalarticles).
 #| message: false
 #| echo: false
 
-filter(journal_data, code == 3) |>
+filter(journal_data) |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
   geom_bar() +
   theme_minimal() +
@@ -138,7 +138,10 @@ filter(journal_data, code == 3) |>
   theme(legend.position = "bottom")
 ```
 
-Some of our data is about articles (@fig-peerarticles).
+
+# Results {#sec-results}
+
+@fig-peerarticles displays
 
 
 ```{r}
@@ -147,9 +150,9 @@ Some of our data is about articles (@fig-peerarticles).
 #| warning: false
 #| message: false
 #| echo: false
-
 journal_peer <-
   filter(journal_data, code == 3, peer == 'y') 
+
 
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
@@ -188,12 +191,7 @@ Talk more about it.
 
 And also planes. (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
-
-# Results
-
-Our results are summarized in...
-
-# Discussion
+# Discussion {#sec-discussion}
 
 ## First discussion point {#sec-first-point}
 
@@ -208,10 +206,6 @@ If my paper were 10 pages, then should be be at least 2.5 pages. The discussion 
 Weaknesses and next steps should also be included.
 
 \newpage
-
-\appendix
-
-# Appendix {-}
 
 
 \newpage

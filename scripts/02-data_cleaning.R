@@ -32,33 +32,25 @@ cleaned_pub_data <- cleaned_pub_data|> slice(-1)
 # Clean names 
 cleaned_pub_data <- clean_names(cleaned_pub_data)
 
-cleaned_pub_data
 
 # Select desired columns 
 cleaned_pub_data <-
   cleaned_pub_data |>
-  select(c, j, year, class, no_source, no_usg, leak, euph, wlc, to_from_found, peer, body_leak, cable, num_cables)
+  select(c, j, year, class, no_source, leak, euph, to_from_found, peer, cable, num_cables)
 
-cleaned_pub_data
 
 # Convert all N/A values
 cleaned_pub_data <-
   cleaned_pub_data |> replace_na(list(class = "n", no_source = "n", 
                                       to_from_found = "n", leak = "n",
                                       euph = "n", peer = "n", 
-                                      body_leak ="0", num_cables = "0", 
-                                      no_usg = "n", wlc = "n", cable = "n" ))  
+                                      num_cables = "0" , cable = "n" ))  
 
 
 
 
 # Change "??" in num_cables to 0 
 cleaned_pub_data$num_cables[cleaned_pub_data$num_cables == "??"] <- "0"
-
-# Change body_leak column to "y" and "n", this is cited as the proper value in 
-# data set preamble but is coded as 0 and 1 in the data set. 
-cleaned_pub_data$body_leak[cleaned_pub_data$body_leak == "0"] <- "n"
-cleaned_pub_data$body_leak[cleaned_pub_data$body_leak == "1"] <- "y"
 
 # Change cable column 0s and 1s to "y" and "n",
 cleaned_pub_data$cable[cleaned_pub_data$cable == "0"] <- "n"
@@ -68,7 +60,6 @@ cleaned_pub_data$cable[cleaned_pub_data$cable == "1"] <- "y"
 cleaned_pub_data$peer[cleaned_pub_data$peer == "0"] <- "n"
 cleaned_pub_data$peer[cleaned_pub_data$peer == "1"] <- "y"
 
-cleaned_pub_data
 
 # Make column names more descriptive 
 cleaned_pub_data <- 
