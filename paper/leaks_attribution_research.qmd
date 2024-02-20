@@ -251,14 +251,26 @@ These findings point to an increase in articles being published that apparently 
 
 # Discussion {#sec-discussion}
 
-## Upward Trend in Publications {#sec-first-point}
-The decreasing number of articles from 2011 to 2020 may suggest that these journals quickly published articles utilizing these sources when they were contextually relevant and moved on to other topics. In doing so, these types of journals may have set a precedent in the international relations publishing community that was followed by TRIP rated peer-reviewed academic journals. 
+This paper explores both the publication trends of articles in International Relations Journals apparently citing classified documents released via WikiLeaks between 2010 and 2020, as well as the inconsistencies of these practices in peer-reviewed academic Journals. By following a reproduction of Darnton's 2022 paper and utilizing their replication data set, a thorough exploration of these topics was made possible. The paper outlines the number of articles published in peer-reviewed and non-peer-reviewed Journals over time, the number of articles failing to communicate the apparently classified nature of the cited information as well as articles that attempt to make this information clear.
+
+## Increase in Published Articles 
+
+As outlined in @fig-fafparticles, articles apparently citing classified documents published in non-peer-reviewed TRIP rated journals decreased sharply after a three year period ending in 2013 when 28 articles were published across both Foreign Affairs and Foreign Policy Magazines. The decreasing number of articles from 2011 to 2020 may suggest that these journals quickly published articles utilizing these sources when they were contextually relevant and moved on to other topics. In doing so, these types of journals may have set a precedent in the international relations publishing community that was followed by TRIP rated peer-reviewed academic journals. 
+
+@fig-peerarticles demonstrates that each of the 18 TRIP rated peer-reviewed academic international relations Journals published at least one article from 2010 to 2020 that cited apparently classified material. This shows an increase in articles published over time apart from outlier years in 2013 and 2016 (curiously surrounding U.S. election years). The lag in publishing following the Manning disclosures in 2010 may be explained by lengthy research, review, and publishing times in academic journals. These delays, which can last upwards of 200 days after submission, may account for the time discrepancy in publishing between peer-reviewed and non-peer-reviewed journals [@publish].  
 
 ## A Case for Reflexive Frameworks
 
+The increase in willingness to publish articles that cite apparently classified documents obtained from WikiLeaks in peer reviewed academic journals is a concerning trend. 
+
+
+
 ## Weaknesses and Next Steps
 
-As this paper has followed a reproduction of Darnton's 2022 paper "The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks", its provided replication data set has been the basis for the analysis portions of this paper. This data set, as outlined in @sec-publications, was built by Darnton by manually searching various databases for articles containing keywords. After this step Darnton manually recorded all relevant attributes by searching and reading each article that directly cited the apparently classified materials. To conduct a more thorough replication, rebuilding Darnton's data set may be required in order to verify all articles and attributes, although this would require considerable time and resources. Broadening the scope of study may also be beneficial in comparing publication trends to Journals in other disciplines. 
+As this paper has followed a reproduction of Darnton's 2022 paper "The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks", its provided replication data set has been the basis for the data and analysis portions of this paper. This data set, as outlined in @sec-publications, was built by Darnton by manually searching various databases for articles containing keywords. Following this step, Darnton manually recorded all relevant attributes by searching and reading each article that directly cited the apparently classified materials. The various steps and tools used in manually searching and recording the data may produce some measure of error in the data set. 
+
+To conduct a more thorough replication, rebuilding Darnton's data set may be required in order to verify all articles and attributes, although this would require considerable time and resources. Broadening the scope of interest to collect more robust data may also be beneficial in including and comparing publication trends in Journals of other disciplines. Further research regarding the ethics and handling of classified documents in other fields of academic research would be beneficial in exploring alternative professional frameworks. An investigation of historical document leaks and any prevalent publication trends may also be helpful in this regard. Future investigation could also include an analysis of any political, financial, or institutional interests held by publishers and the possible effect this may have on their willingness to publish these sorts of articles.
+
 
 \newpage
 
