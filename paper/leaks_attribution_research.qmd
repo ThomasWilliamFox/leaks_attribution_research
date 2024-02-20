@@ -57,7 +57,7 @@ Researchers in various fields are guided by frameworks established by profession
 
 This paper follows a reproduction of Darnton's 2022 paper, "The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks" by examining its replication data made available through the Harvard Dataverse [@darntondata]. The analysis of the data was carried out with the programming language `R` [@citeR]. Various packages were used in the processing, cleaning, and presentation of this information, including `tidyverse` [@tidyverse], `knitr` [@knitr], `here` [@here], `dplyr` [@dplyr], and `janitor` [@janitor].
 
-This analysis shows that influential, editorial, non-peer reviewed international relations journals set a precedent of publishing articles apparently referencing leaked classified materials in the years following the "Iraq War Logs" leak in 2010 [@darnton]. As the numbers of articles published by these journals declined, peer-reviewed academic journals published articles apparently referencing leaked classified documents with increasing frequency. These articles are inconsistently cited, provide little justification for using such materials, and rarely discuss the implications of these practices. A framework similar to that discussed by @darnton is supported by these findings as a potential means of encouraging professional reflexivity and consistency in academic and professional research.
+This analysis shows that influential, editorial, non-peer reviewed international relations journals may have set a precedent of publishing articles apparently referencing leaked classified materials in the years following the "Iraq War Logs" leak in 2010 [@darnton]. The paper's estimand is that as the numbers of articles published by these journals declined, peer-reviewed academic journals began publishing articles apparently referencing leaked classified documents with increasing frequency. These articles are inconsistently cited, provide little justification for using such materials, and rarely discuss the implications of these practices. A framework similar to that discussed by @darnton is supported by these findings as a potential means of encouraging professional reflexivity and consistency in academic and professional research.
 
 This remainder of this paper contains an outline of the data examined, an analysis of the data, and a discussion of the findings. [@sec-data] outlines the analysis data made available by Darnton [@darntondata]. [@sec-journals] examines the TRIP-20 journals and their ratings @trip. [@sec-publications] outlines the data-set built by Darnton, consisting of information about articles that apparently use classified materials [@darntondata]. An exploration and analysis of the data is found in [@sec-results]. The paper concludes with a discussion surrounding the paper's findings, including potential weaknesses and further research [@sec-discussion].
 
@@ -127,13 +127,13 @@ head(journal_data[c(7:12)], 6) |>
   ) 
 ```
 
-Various variables coded as "y" for yes and "n" for no are used in Darnton's data set. The "Classified" variable indicates whether the article makes reference to the classified nature of the materials [@darnton]. "No Source" indicates that at least one referenced document is missing a citation. "Leak" indicates that the article mentions leaked nature of sources. "Uses Euphemism" refers to articles that use verbs other than leak such as "publish, or disseminate." "WikiLeaks' cable" indicates if an article refers to a document or cable as the possession of WikiLeaks rather than its true source. The "To-From-Found" variable describes whether citations include an "author (can be"embassy"), recipient (even "State"), and repository" [@darnton]. "Peer reviewed" indicates whether the journal is peer reviewed. "Cable Discussed" indicates whether an article discusses leaked US cables and the "Cables Cited" variable communicates how many individual leaked cables are cited.
+Various variables coded as "y" for yes and "n" for no are used in Darnton's data set. The "Classified" variable indicates whether the article makes reference to the classified nature of the materials [@darnton]. "No Source" indicates that at least one referenced document is missing a citation. "Leak" indicates that the article mentions leaked nature of sources. "Uses Euphemism" refers to articles that use verbs other than leak such as "publish, or disseminate." "WikiLeaks' cable" indicates if an article refers to a document or cable as the possession of WikiLeaks rather than its true source. The "To-From-Found" variable describes whether citations include an "author (can be "embassy"), recipient (even "State"), and repository" [@darnton]. "Peer reviewed" indicates whether the journal is peer reviewed. "Cable Discussed" indicates whether an article discusses leaked US cables and the "Cables Cited" variable communicates how many individual leaked cables are cited.
 
 @fig-totalarticles displays all 168 articles published in TRIP rated journals from 2010-2020 that apparently cite or reference leaked documents from WikiLeaks directly or through secondary sources. The years with the greatest number of articles published are 2011 with 24, 2013 with 21, and 2016 with 20. The Journals that published the most articles according to the data set are International Affairs (IA) with 29, Foreign Policy (FP) with 25, and International Security (IS) with 16.
 
 ```{r}
 #| label: fig-totalarticles
-#| fig-cap: Articles in TRIP rated Journals apparently citing leaked classified material
+#| fig-cap: Articles in TRIP rated Journals apparently citing leaked classified material either directly or indirectly between 2010 and 2020
 #| warning: false
 #| message: false
 #| echo: false
@@ -152,18 +152,20 @@ filter(journal_data) |>
 
 # Results {#sec-results}
 
-@fig-peerarticles displays articles that apparently directly cite leaked classified materials in peer-reviewed journals. This graph indicates an upward trend in publication by all 18 TRIP peer-reviewed journals.
+To better understand the publication trends in these articles, this section will explore an analysis of the articles directly citing apparently classified documents. We will focus on differences in trends between peer-reviewed and non-peer-reviewed journals as well as citation attributes in the articles published by academic journals using these materials. 
+
+@fig-peerarticles displays articles that apparently directly cite leaked classified materials in peer-reviewed journals. 81 articles in peer-reviewed TRIP rated journals apparently used such materials. The Journals with the greatest number of articles citing apparently leaked materials are International Affairs (IA) with 14, International Security (IS) with 10, as well as the Review of International Studies (RIS) and Security Studies (SS) with 9 each. This graph indicates an upward trend in publications in these journals from 2010 to 2020 with the greatest number of articles published in 2016, 2018, and 2019.  
 
 ```{r}
 #| label: fig-peerarticles
-#| fig-cap:  Articles in peer-reviewed TRIP rated Journals apparently citing leaked classified material directly 
+#| fig-cap:  Articles in peer-reviewed TRIP rated Journals apparently citing leaked classified material directly between 2010 and 2020
 #| warning: false
 #| message: false
 #| echo: false
+#| fig.pos: "H"
+
 journal_peer <-
   filter(journal_data, code == 3, peer == 'y') 
-
-#table(journal_peer$leak)
 
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
@@ -175,15 +177,15 @@ journal_peer |>
 
 ```
 
-@fig-fafparticles shows the articles apparently directly citing classified materials published by Foreign Affairs magazine and Foreign Policy magazine, both non-academic, editorial journals [@darnton]. The decreasing number of articles from 2011 to 2020 suggest that these journals quickly published articles utilizing these sources when they were contextually relevant and moved on to other topics. In doing so, these types of journals may have set a precedent in the international relations publishing community that was followed by TRIP rated peer-reviewed academic journals.
+@fig-fafparticles shows the articles apparently directly citing classified materials published by Foreign Affairs magazine and Foreign Policy magazine, both non-academic, editorial journals [@darnton]. Foreign Affairs (FA) published 10 articles referencing such materials and Foreign Policy (FP) published 25. The majority of these articles were published from 2011 to 2013 where Foreign Policy published 22 articles and Foreign Affairs published 6, after which a sharp decline in articles released by these publications can be seen. 
 
 ```{r}
 #| label: fig-fafparticles
-#| fig-cap: Articles in Foreign Affairs and Foreign Policy Magazines apparently citing leaked classified material
+#| fig-cap: Articles in Foreign Affairs and Foreign Policy Magazines apparently citing leaked classified material directly between 2010 and 2020
 #| warning: false
 #| message: false
 #| echo: false
-
+#| fig.pos: "H"
 
 journal_peer <-
   filter(journal_data, code == 3, peer == 'n') 
@@ -198,17 +200,18 @@ journal_peer |>
 
 ```
 
-@fig-peerpoorprac shows the number of peer reviewed articles that either do not mention the classified nature of the materials cited, contain at least one missing citation to a leaked document, use a euphemism like "disseminate" rather than leak, or mention "WikiLeaks'" cable/document rather than citing its true source. Any one of these attributes suggests that the article is obscuring the true source of the utilized information.
+@fig-peerpoorprac shows the number of peer reviewed articles that either fail to mention the classified nature of the materials cited, omit any reference to the materials being leaked, or fail to properly cite the cable being referenced according to the to-from-found format outlined in @sec-publications. Any one of these attributes suggests that an article fails to communicate the true source of the utilized information. Of the articles in this group, 12 were published by International Affairs (IA), 8 by International Security, and 7 each by International Studies (RIS) and Security Studies (SS). Of the 64 articles that had one of the attributes outlined above, 33 articles had all three. 
 
 ```{r}
 #| label: fig-peerpoorprac
-#| fig-cap: Articles in peer-reviewed TRIP rated Journals down-playing the source of materials
+#| fig-cap: Articles in peer-reviewed TRIP rated Journals directely referencing apparently classified materials but failing to either communicate their apparently classified nature, mention their leaked orgin, or use a to-from-found citation format. 
 #| warning: false
 #| message: false
 #| echo: false
+#| fig.pos: "H"
 
 journal_peer <-
-  filter(journal_data, code == 3, peer == 'y', cable == 'y', classified == 'n'| leak == 'n' | to_from_found == 'n') 
+  filter(journal_data, code == 3, peer == 'y', cable == 'y', classified == 'n' | leak == 'n'| to_from_found == 'n') 
 
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
@@ -220,18 +223,20 @@ journal_peer |>
 
 ```
 
-@fig-peergoodprac demonstrates peer-reviewed journal articles articles that either discuss the classified nature of the material, discuss the fact that the materials were leaked, or contain a "to-from-found" citation (see @sec-publications). Any one of these facets point to transparent research practices, although it is worth mentioning that none of the articles included in this analysis displayed all of these attributes.
+@fig-peergoodprac demonstrates peer-reviewed journal articles articles that either discuss the classified nature of the material, discuss the fact that the materials were leaked, or contain a "to-from-found" citation (see @sec-publications). Journals with the greatest number of articles that display one of these attributes are International Affairs (IA) with 7, International Security (IS) with 5, and 4 each by International Studies (RIS) and Security Studies (SS). It is worth noting that none of the 31 articles in this group display all three attributes.
 
 ```{r}
 #| label: fig-peergoodprac
-#| fig-cap: Articles in peer-reviewed TRIP rated Journals properly citing source of materials 
+#| fig-cap: Articles in peer-reviewed TRIP rated Journals directly referencing apparently classified materials and either properly communicating their apparently classified nature, mentioning their leaked orgin, or using a to-from-found citation format. 
 #| warning: false
 #| message: false
 #| echo: false
+#| fig.pos: "H"
 
 journal_peer <-
   filter(journal_data, code == 3, peer == 'y', classified == 'y' | leak =='y' | to_from_found == 'y') 
 
+
 journal_peer |>
   ggplot(aes(x = as.character(`year`), fill = journal)) +
   geom_bar() +
@@ -242,19 +247,18 @@ journal_peer |>
 
 ```
 
-These findings point to a decrease in reluctance to publish articles that apparently utilize these materials by peer-reviewed academic international relations journals. Although Foreign Affairs and Foreign Policy Magazine are not academic journals, they are both in the top ten most influential journals in the field of international relations (4 and 9 respectively) as outlined in the 2011 TRIP survey [@trip]. The lack of consistency in disclosure regarding the nature of these documents in many of these articles obscures their source as well as the ethical implications surrounding their use. Many articles use good practices while referencing these materials, but as Darnton points out, very few discuss the reasons for relying on them.
+These findings point to an increase in articles being published that apparently utilize these materials by peer-reviewed academic international relations journals. Although Foreign Affairs and Foreign Policy Magazine are not academic journals, they are both in the top ten most influential journals in the field of international relations (4 and 9 respectively) as outlined in the 2011 TRIP survey [@trip]. The lack of consistency in disclosure regarding the nature of these documents in many of these articles obscures their source as well as the ethical implications surrounding their use. Many articles attempt to clearly communicate the source of these materials, but as Darnton points out, very few discuss the reasons for relying on them [@darnton].
 
 # Discussion {#sec-discussion}
 
 ## Upward Trend in Publications {#sec-first-point}
-
-## Inconsistent Professional Practices
+The decreasing number of articles from 2011 to 2020 may suggest that these journals quickly published articles utilizing these sources when they were contextually relevant and moved on to other topics. In doing so, these types of journals may have set a precedent in the international relations publishing community that was followed by TRIP rated peer-reviewed academic journals. 
 
 ## A Case for Reflexive Frameworks
 
 ## Weaknesses and Next Steps
 
-Weaknesses and next steps should also be included.
+As this paper has followed a reproduction of Darnton's 2022 paper "The Provenance Problem: Research Methods and Ethics in the Age of WikiLeaks", its provided replication data set has been the basis for the analysis portions of this paper. This data set, as outlined in @sec-publications, was built by Darnton by manually searching various databases for articles containing keywords. After this step Darnton manually recorded all relevant attributes by searching and reading each article that directly cited the apparently classified materials. To conduct a more thorough replication, rebuilding Darnton's data set may be required in order to verify all articles and attributes, although this would require considerable time and resources. Broadening the scope of study may also be beneficial in comparing publication trends to Journals in other disciplines. 
 
 \newpage
 
